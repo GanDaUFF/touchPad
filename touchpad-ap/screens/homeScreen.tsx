@@ -1,23 +1,31 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { connectSocket } from '../services/socket';
-import TouchPad from '../components/touchPad'; // cuidado com a capitalização
+// screens/HomeScreen.tsx
+import React from 'react';
+import { View, Button, StyleSheet, Text } from 'react-native';
 
-export default function HomeScreen() {
-  useEffect(() => {
-    connectSocket("192.168.1.11");
-  }, []);
-
+export default function HomeScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
-      <TouchPad />
+      <Text style={styles.title}>Escolha o modo:</Text>
+
+      <Button
+        title="🖱️ Mouse + Teclado"
+        onPress={() => navigation.navigate('MouseTeclado')}
+      />
+
+      {/* Futuramente */}
+      {/* <Button title="🎮 Controle Gamer" onPress={() => {}} /> */}
+      {/* <Button title="⌨️ Teclado Gamer" onPress={() => {}} /> */}
+      {/* <Button title="🖱️+⌨️ Gamer" onPress={() => {}} /> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // ESSENCIAL para ocupar toda a tela
-    backgroundColor: '#fff',
+    flex: 1, justifyContent: 'center', alignItems: 'center',
+    padding: 20
   },
+  title: {
+    fontSize: 24, marginBottom: 30, fontWeight: 'bold'
+  }
 });

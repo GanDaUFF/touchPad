@@ -9,10 +9,31 @@ export const connectSocket = (ip: string, port = 8080) => {
   socket.onerror = (e) => console.log("❌ Erro no socket:", e);
   socket.onclose = () => console.log("🔌 Socket desconectado");
 };
-
-export const sendMouseDelta = (dx: number, dy: number, type: 'move' | 'scroll' | 'click' = 'move') => {
+export const sendClick = (button: 'left' | 'right') => {
   if (socket?.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({ dx, dy, type }));
+    socket.send(JSON.stringify({ click: button }));
+  }
+};
+
+export const sendTextMode = (ativo: boolean) => {
+  if (socket?.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ action: 'textMode', ativo }));
+  }
+};
+
+export const sendTextInput = (text: string) => {
+  if (socket?.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ action: 'type', text }));
+  }
+};
+
+export const sendMouseDelta = (
+  dx: number,
+  dy: number,
+  action: "move" | "scroll" | "click" | "leftClick" | "rightClick" = "move"
+) => {
+  if (socket?.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ dx, dy, action }));
   }
 };
 
